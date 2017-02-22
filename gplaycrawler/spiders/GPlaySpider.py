@@ -29,9 +29,9 @@ class GPlaySpider(CrawlSpider):
         items = []
         for titles in titles:
             item = GplaycrawlerItem()
-            item["Name"] = titles.xpath("//div[@class='id-app-title']/text()").extract_first()
-            item["Description"] = titles.xpath("//div[@itemprop='description']/div/text()").extract_first()
-            item["Developer"] = titles.xpath("//span[@itemprop='name']/text()").extract_first()
-            item["Ratings"] = titles.xpath("//span[@class='rating-count']/text()").extract_first()
+            item["Name"] = titles.xpath("//div[@class='id-app-title']/text()").extract()
+            item["Description"] = titles.xpath("//div[@itemprop='description']/div/text()").extract()
+            item["Developer"] = titles.xpath("//span[@itemprop='name']/text()").extract()
+            item["Ratings"] = titles.xpath("//span[@class='rating-count']/text()").extract()
             items.append(item)
         return items
