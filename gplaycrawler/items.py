@@ -5,32 +5,34 @@
 # See documentation in:
 # http://doc.scrapy.org/en/latest/topics/items.html
 
-import scrapy
+from scrapy import Item, Field
 
-
-class GplaycrawlerItem(scrapy.Item):
+class GplaycrawlerItem(Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
-    Title = scrapy.Field()
-    Description = scrapy.Field()
-    DeveloperName = scrapy.Field()
-    Genre = scrapy.Field()
-    Price = scrapy.Field()
-    Ratings = scrapy.Field()
-    FiveStarRatings = scrapy.Field()
-    FourStarRatings = scrapy.Field()
-    ThreeStarRatings = scrapy.Field()
-    TwoStarRatings = scrapy.Field()
-    OneStarRatings = scrapy.Field()
-    ReviewsAverage = scrapy.Field()
-    ContentRating = scrapy.Field()
-    WhatsNew = scrapy.Field()
-    LastUpdated = scrapy.Field()
-    Downloads = scrapy.Field()
-    CurrentVersion = scrapy.Field()
-    AndroidVersion = scrapy.Field()
-    DeveloperWebsite = scrapy.Field()
-    DeveloperEmail = scrapy.Field()
-    DeveloperAddress = scrapy.Field()
-    PrivacyPolicyLink = scrapy.Field()
+    Title = Field()
+    Url = Field()
+    Description = Field()
+    DeveloperName = Field()
+    Genre = Field()
+    Price = Field()
+    Preregister = Field()
+    Ratings = Field()
+    FiveStarRatings = Field()
+    FourStarRatings = Field()
+    ThreeStarRatings = Field()
+    TwoStarRatings = Field()
+    OneStarRatings = Field()
+    ReviewsAverage = Field()
+    ContentRating = Field()
+    WhatsNew = Field()
+    LastUpdated = Field()
+    Downloads = Field()
+    CurrentVersion = Field()
+    AndroidVersion = Field()
+    DeveloperWebsite = Field()
+    DeveloperEmail = Field()
+    DeveloperAddress = Field()
+    PrivacyPolicyLink = Field()
+    Permissions = Field()
     pass

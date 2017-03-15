@@ -13,8 +13,15 @@ BOT_NAME = 'gplaycrawler'
 
 SPIDER_MODULES = ['gplaycrawler.spiders']
 NEWSPIDER_MODULE = 'gplaycrawler.spiders'
-ITEM_PIPLINES = { 'gplaycrawler.pipelines.GplaycrawlerPipeline': 0 }
+ITEM_PIPLINES = { 'gplaycrawler.pipelines.GplaycrawlerPipeline': 300 }
 
+CONCURRENT_REQUESTS_PER_DOMAIN = 100
+REACTOR_THREADPOOL_MAXSIZE = 20
+LOG_LEVEL = 'INFO'
+COOKIES_ENABLED = False
+DOWNLOAD_TIMEOUT = 60
+AUTOTHROTTLE_ENABLED = True
+AUTOTHROTTLE_START_DELAY = 1
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'gplaycrawler (+http://www.yourdomain.com)'
