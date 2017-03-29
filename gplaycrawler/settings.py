@@ -17,7 +17,9 @@ ITEM_PIPLINES = { 'gplaycrawler.pipelines.GplaycrawlerPipeline': 300 }
 
 CONCURRENT_REQUESTS_PER_DOMAIN = 100
 REACTOR_THREADPOOL_MAXSIZE = 20
+LOG_ENABLED = True
 LOG_LEVEL = 'INFO'
+#LOG_FILE = 'logs\log.log'
 COOKIES_ENABLED = False
 DOWNLOAD_TIMEOUT = 60
 AUTOTHROTTLE_ENABLED = True
@@ -25,7 +27,7 @@ AUTOTHROTTLE_START_DELAY = 1
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'gplaycrawler (+http://www.yourdomain.com)'
-USER_AGENT = 'Andrew Jolly (+https://www.umflint.edu)'
+USER_AGENT = 'Andrew Jolly (+anjolly@umflint.edu)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
