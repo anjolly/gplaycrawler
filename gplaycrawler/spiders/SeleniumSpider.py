@@ -1,4 +1,6 @@
 from gplaycrawler.items import GplaycrawlerItem
+from gplaycrawler.gplayapi.googleplay import GooglePlayAPI
+from gplaycrawler.gplayapi.config import *
 from scrapy import signals
 from scrapy.selector import Selector
 from scrapy.spiders import CrawlSpider, Rule
@@ -22,9 +24,8 @@ class SeleniumSpider(CrawlSpider):
         self.allowed_domains = [ "play.google.com" ]
         self.start_urls = [ "https://play.google.com/store/apps/" ]
         self.rules = (
-            Rule(LinkExtractor(allow=('/store/apps/collection/',))),
-            Rule(LinkExtractor(allow=('/store/apps/category/',))),
-            Rule(LinkExtractor(allow=('/store/apps/details\?')),callback='parse_link'),
+            Rule(LinkExtractor(allow=('/store/apps/details\?')),follow=True,callback='parse_link'),
+            Rule(LinkExtractor(allow=('/store/apps',)),follow=True),
         )
         #self.driver = webdriver.PhantomJS()
         self.driver = webdriver.Chrome("chromedriver.exe")
@@ -55,6 +56,16 @@ class SeleniumSpider(CrawlSpider):
         self.driver.get(response.url)
         #self.state['items_count'] = self.state.get('items_count', 0) + 1
         #titles = self.driver.find_elements_by_xpath("/html")
+
+        #download apk
+        api = GooglePlayAPI(ANDROID_ID)
+        api.login(GOOGLE_LOGIN, GOOGLE_PASSWORD, AUTH_TOKEN)
+        packageName = response.url.split('=')
+        fileName = "%s.apk" % (packageName[1])
+        data = api.download(packageName[1])
+        with open("apks\%s" % (fileName), "wb") as f:
+            f.write(data)
+
         items = []
         for titles in titles:
             item = GplaycrawlerItem()

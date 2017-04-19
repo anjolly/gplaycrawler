@@ -1,5 +1,5 @@
 from gplaycrawler.items import GplaycrawlerItem
-from scrapy.selector import HtmlXPathSelector
+from scrapy.selector import Selector
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 import urlparse
@@ -10,8 +10,8 @@ class ScrapySpider(CrawlSpider):
     allowed_domains = [ "play.google.com" ]
     start_urls = [ "https://play.google.com/store/apps/" ]
     rules = (
-        Rule(LinkExtractor(allow=('/store/apps',)),follow=True),
         Rule(LinkExtractor(allow=('/store/apps/details\?')),follow=True,callback='parse_link'),
+        Rule(LinkExtractor(allow=('/store/apps',)),follow=True),
     )
 
     def abs_url(url, response):
@@ -24,12 +24,13 @@ class ScrapySpider(CrawlSpider):
         return urlparse.urljoin(base, url)
 
     def parse_link(self, response):
-        hxs = HtmlXPathSelector(response)
-        titles = hxs.xpath('/html')
+        sel = Selector(response)
+        titles = sel.xpath('/html')
         items = []
         for titles in titles:
             item = GplaycrawlerItem()
             item["Title"] = titles.xpath("//div[@class='id-app-title']/text()").extract()
+            item["Url"] = response.url
             item["Description"] = titles.xpath("//div[@itemprop='description']/div/text()").extract()
             item["DeveloperName"] = titles.xpath("//span[@itemprop='name']/text()").extract()
             item["Genre"] = titles.xpath("//span[@itemprop='genre']/text()").extract()
@@ -44,6 +45,7 @@ class ScrapySpider(CrawlSpider):
             item["ContentRating"] = titles.xpath("//div[@itemprop='contentRating']/text()").extract()
             item["WhatsNew"] = titles.xpath("//div[@class='details-section whatsnew']//div[@class='recent-change']/text()").extract()
             item["LastUpdated"] = titles.xpath("//div[@itemprop='datePublished']/text()").extract()
+            item["FileSize"] = titles.xpath("//div[@itemprop='fileSize']/text()").extract()
             item["Downloads"] = titles.xpath("//div[@itemprop='numDownloads']/text()").extract()
             item["CurrentVersion"] = titles.xpath("//div[@itemprop='softwareVersion']/text()").extract()
             item["AndroidVersion"] = titles.xpath("//div[@itemprop='operatingSystems']/text()").extract()
