@@ -96,6 +96,12 @@ while i < len(categories):
             retry += 1
             print "Retrying attempt %s..." % (retry)
             continue
+    except Exception as e:
+        print "%s thrown for category %s" % (e, categories[i])
+        if (retry < 3):
+            retry += 1
+            print "Retrying attempt %s..." % (retry)
+            continue
     if (retry < 3 and attempt < 3):
         print "Finished %s" % (categories[i])
     else:
