@@ -1,4 +1,6 @@
 from gplaycrawler.items import GplaycrawlerItem
+from gplaycrawler.gplayapi.googleplay import GooglePlayAPI
+from gplaycrawler.gplayapi.config import *
 from scrapy.selector import Selector
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
@@ -26,6 +28,16 @@ class ScrapySpider(CrawlSpider):
     def parse_link(self, response):
         sel = Selector(response)
         titles = sel.xpath('/html')
+
+        #download apk
+        api = GooglePlayAPI(ANDROID_ID)
+        api.login(GOOGLE_LOGIN, GOOGLE_PASSWORD, AUTH_TOKEN)
+        packageName = response.url.split('=')
+        fileName = "%s.apk" % (packageName[1])
+        data = api.download(packageName[1])
+        with open("apks\%s" % (fileName), "wb") as f:
+            f.write(data)
+
         items = []
         for titles in titles:
             item = GplaycrawlerItem()
