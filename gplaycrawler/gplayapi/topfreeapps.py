@@ -3,6 +3,7 @@ import urlparse
 import json
 import codecs
 import os
+import time
 from google.protobuf import text_format
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
@@ -65,6 +66,12 @@ while i < len(categories):
 
         doc = message.doc[0]
         for c in doc.child:
+		
+            fileName = "%s.apk" % (c.docid)
+            data = api.download(c.docid)
+            with open("apks\%s" % (fileName), "wb") as f:
+				f.write(data)
+            time.sleep(20)
 
             # permissions
             detailsResponse = api.details(c.docid)

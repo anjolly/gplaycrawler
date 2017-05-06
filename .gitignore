@@ -89,4 +89,4 @@ ENV/
 .ropeproject
 
 crawls/
-auth.json
+*.json
